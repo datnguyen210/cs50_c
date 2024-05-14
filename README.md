@@ -21,3 +21,6 @@ A number of “readability tests” have been developed over the years that defi
 
 index = 0.0588 * L - 0.296 * S - 15.8
 where L is the average number of letters per 100 words in the text, and S is the average number of sentences per 100 words in the text.
+
+# Prolem set 2 - Ceasar
+Supposedly, Caesar (yes, that Caesar) used to “encrypt” (i.e., conceal in a reversible way) confidential messages by shifting each letter therein by some number of places. For instance, he might write A as B, B as C, C as D, …, and, wrapping around alphabetically, Z as A. And so, to say HELLO to someone, Caesar might write IFMMP instead. Upon receiving such messages from Caesar, recipients would have to “decrypt” them by shifting letters in the opposite direction by the same number of places.
