@@ -23,8 +23,10 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    // Copy to a new image.
+    // Create a copy of the original image
     RGBTRIPLE copy[height][width];
+
+    // Copy the original image to the copy
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -33,33 +35,39 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    // Replace each rgbtriple by the average value of pixels forming a 3x3 box around it.
+    // Iterate over each pixel in the image
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
             int redSum = 0, greenSum = 0, blueSum = 0;
             int count = 0;
+
+            // Iterate over the neighboring pixels
             for (int di = -1; di <= 1; di++)
             {
-                for(int dj = -1; dj <= 1; dj++)
+                for (int dj = -1; dj <= 1; dj++)
                 {
-                    int newI = i + di;
-                    int newJ = j + dj;
-                    if(newI >=0 & newI < height & newJ >=0 & newJ < width)
+                    int ni = i + di;
+                    int nj = j + dj;
+
+                    // Check if neighbor is within the image bounds
+                    if (ni >= 0 && ni < height && nj >= 0 && nj < width)
                     {
-                        redSum += copy[newI][newJ].rgbtRed;
-                        greenSum += copy[newI][newJ].rgbtGreen;
-                        blueSum += copy[newI][newJ].rgbtBlue;
+                        redSum += copy[ni][nj].rgbtRed;
+                        greenSum += copy[ni][nj].rgbtGreen;
+                        blueSum += copy[ni][nj].rgbtBlue;
                         count++;
                     }
                 }
             }
-            image[i][j].rgbtRed = round((float)redSum / count);
-            image[i][j].rgbtBlue = round((float)blueSum / count);
-            image[i][j].rgbtGreen = round((float)greenSum / count);
+
+            // Calculate the average color values
+            image[i][j].rgbtRed = redSum / count;
+            image[i][j].rgbtGreen = greenSum / count;
+            image[i][j].rgbtBlue = blueSum / count;
         }
     }
-    printf("GOES HERE");
     return;
 }
+

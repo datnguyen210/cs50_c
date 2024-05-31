@@ -18,7 +18,6 @@ int main(int argc, char* argv[])
     }
 
     // Call getopt() again to check if there are additional options.
-    // If it returns a value other than -1 (indicating another option was found), the program prints an error message and exits with status 2, ensuring only one filter is allowed.
     if (getopt(argc, argv, filters) != -1)
     {
         printf("Only one filter allowed.\n");
@@ -37,7 +36,7 @@ int main(int argc, char* argv[])
     char* outfile = argv[optind + 1];
 
     // Open input file
-    FILE* inptr = fopen(infile, "r");
+    FILE* inptr = fopen(infile, "rb");
     if (inptr == NULL)
     {
         printf("Could not open %s.\n", infile);
@@ -45,7 +44,7 @@ int main(int argc, char* argv[])
     }
 
     // Open output file
-    FILE* outptr = fopen(outfile, "w");
+    FILE* outptr = fopen(outfile, "wb");
     if (outptr == NULL)
     {
         fclose(inptr);
@@ -76,7 +75,7 @@ int main(int argc, char* argv[])
     int width = bi.biWidth;
 
     // Allocate memory for image
-    RGBTRIPLE(*image)[width] = calloc(height, width* sizeof(RGBTRIPLE));
+    RGBTRIPLE(*image)[width] = calloc(height, width * sizeof(RGBTRIPLE));
     if (image == NULL)
     {
         printf("Not enough memory to store image.\n");
@@ -86,7 +85,7 @@ int main(int argc, char* argv[])
     }
 
     // Determine padding for scanlines
-    int padding = (4 - (width* sizeof(RGBTRIPLE)) % 4) % 4;
+    int padding = (4 - (width * sizeof(RGBTRIPLE)) % 4) % 4;
 
     // Iterate over infile's scanlines
     for (int i = 0; i < height; i++)
