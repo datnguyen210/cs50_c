@@ -20,29 +20,33 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
 // Convert image to sepia
 void sepia(int height, int width, RGBTRIPLE image[height][width])
 {
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            RGBTRIPLE pixel = image[i][j];
+            int sepiaRed = round(.393 * pixel.rgbtRed + .769 * pixel.rgbtGreen + .189 * pixel.rgbtBlue);
+            int sepiaGreen = round(.349 * pixel.rgbtRed + .686 * pixel.rgbtGreen + .168 * pixel.rgbtBlue);
+            int sepiaBlue = round(.272 * pixel.rgbtRed + .534 * pixel.rgbtGreen + .131 * pixel.rgbtBlue);
+            image[i][j].rgbtRed = sepiaRed > 255 ? 255 : sepiaRed;
+            image[i][j].rgbtGreen = sepiaGreen > 255 ? 255 : sepiaGreen;
+            image[i][j].rgbtBlue = sepiaBlue > 255 ? 255 : sepiaBlue;
+        }
+    }
     return;
 }
 
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
-    // Create a copy of the original image
-    RGBTRIPLE copy[height][width];
-
-    // Copy the original image to the copy
     for (int i = 0; i < height; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (int j = 0; j < width / 2; j++)
         {
-            copy[i][j] = image[i][j];
-        }
-    }
-
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            image[i][j] = copy[i][width - j];
+            // Swap pixels horizontally
+            RGBTRIPLE temp = image[i][j];
+            image[i][j] = image[i][width - 1 - j];
+            image[i][width - 1 - j] = temp;
         }
     }
     return;
